@@ -9,6 +9,22 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final greeting = "Hello John";
+//    final greeting = "你好，佰子";
+    final morning = "Good Morning";
+//    final morning = "早上好";
+    final agenda = "Today there are three agenda";
+//    final agenda = "今天您有 3 个日程";
+    final plansTip = "Your plans:";
+//    final plansTip = "你的计划：";
+
+    final events = "Events";
+//    final events = "事件";
+    final project = "Projects";
+//    final project = "项目";
+
+    final categoryHint = "Categories";
+//    final categoryHint = "分类";
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -80,25 +96,22 @@ class _HomePageState extends State<HomePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          "Hello John",
+                          greeting,
                           style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w700,
-//                            fontFamily: "RobotoMono",
-                          ),
+                              fontSize: 24, fontWeight: FontWeight.w700),
                         ),
                         SizedBox(
                           height: 4,
                         ),
                         Text(
-                          "Good Morning",
+                          morning,
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.grey[400],
                           ),
                         ),
                         Text(
-                          "Today there are three agenda",
+                          agenda,
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.grey[400],
@@ -118,7 +131,7 @@ class _HomePageState extends State<HomePage> {
                   Container(
                     width: 100,
                     child: Text(
-                      "Your plans:",
+                      plansTip,
                       style: TextStyle(
                         color: Colors.grey,
                         fontSize: 14,
@@ -141,7 +154,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                             SizedBox(height: 4),
                             Text(
-                              "Events",
+                              events,
                               style: TextStyle(
                                 color: Color(0xFF94969A),
                                 fontSize: 12,
@@ -164,7 +177,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                             SizedBox(height: 4),
                             Text(
-                              "Projects",
+                              project,
                               style: TextStyle(
                                 color: Color(0xFF94969A),
                                 fontSize: 12,
@@ -182,7 +195,7 @@ class _HomePageState extends State<HomePage> {
               ),
               // 分类
               _HeadingView(
-                title: "Categories",
+                title: categoryHint,
                 subtitle: "7 chosen",
                 iconData: Icons.category,
               ),
@@ -191,6 +204,7 @@ class _HomePageState extends State<HomePage> {
 //                padding: const EdgeInsets.symmetric(vertical: 16),
                 margin: EdgeInsets.symmetric(vertical: 8),
                 child: ListView(
+                  physics: BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   children: <Widget>[
                     _CategoryButton(
@@ -222,55 +236,15 @@ class _HomePageState extends State<HomePage> {
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
-                      child: Material(
-                        elevation: 2,
-                        shadowColor: Colors.black54,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              Row(
-                                children: <Widget>[
-                                  Icon(
-                                    Icons.check_box_outline_blank,
-                                    color: Colors.green,
-                                    size: 15,
-                                  ),
-                                  SizedBox(
-                                    width: 4,
-                                  ),
-                                  Text(
-                                    "Look at the website",
-                                    style: TextStyle(
-                                        fontSize: 14,
-//                                        fontFamily: "ShareTechMono",
-//                                        fontFamily: "RobotoMono",
-                                        fontWeight: FontWeight.w200),
-                                  ),
-                                ],
-                              ),
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text("10:00"),
-                                    Switch(
-                                      value: true,
-                                      materialTapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
-                                      onChanged: (flag) {},
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
+                    _ArrangementItemView(
+                      time: "10:00",
+                      isOn: true,
+                      events: "Look at the website",
+                    ),
+                    _ArrangementItemView(
+                      time: "12:00",
+                      isOn: false,
+                      events: "Fix the bugs",
                     ),
                   ],
                 ),
@@ -305,11 +279,7 @@ class _HeadingView extends StatelessWidget {
             children: <Widget>[
               Text(
                 "$title",
-                style: TextStyle(
-                  fontWeight: FontWeight.w700,
-//                  fontFamily: "ShareTechMono",
-                  fontSize: 20,
-                ),
+                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
               ),
             ],
           ),
@@ -363,21 +333,6 @@ class _HeadingView extends StatelessWidget {
               onPressed: onPressed == null ? () {} : onPressed,
             ),
           ),
-          Container(
-            margin: EdgeInsets.all(8),
-            padding: EdgeInsets.all(0),
-            constraints: BoxConstraints(
-              minWidth: 30,
-              minHeight: 30,
-              maxHeight: 30,
-              maxWidth: 30,
-            ),
-//                iconSize: 20,
-            child: Icon(
-              iconData,
-              size: 20,
-            ),
-          ),
         ],
       );
     }
@@ -427,6 +382,81 @@ class _CategoryButton extends StatelessWidget {
                     style: TextStyle(color: Colors.white, fontSize: 14),
                   ),
           )),
+    );
+  }
+}
+
+class _ArrangementItemView extends StatelessWidget {
+  final String events;
+  final String time;
+  final bool isOn;
+
+  const _ArrangementItemView({Key key, this.events, this.time, this.isOn})
+      : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      margin: const EdgeInsets.only(right: 16.0, left: 4),
+      child: Material(
+        elevation: 2,
+        shadowColor: Colors.black54,
+        borderRadius: BorderRadius.circular(6),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Icon(
+                    Icons.check_box_outline_blank,
+                    color: Colors.green,
+                    size: 20,
+                  ),
+                  SizedBox(
+                    width: 4,
+                  ),
+                  ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minWidth: 120,
+                    ),
+                    child: Text(
+                      "$events",
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w200,
+                          color: Color(0xFF94969A)),
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      "$time",
+                      style: TextStyle(fontSize: 18, color: Color(0xFF5F5F60)),
+                    ),
+                    ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxHeight: 25,
+                      ),
+                      child: Switch(
+                        value: isOn,
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        onChanged: (flag) {},
+                      ),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
