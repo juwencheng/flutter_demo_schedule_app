@@ -1,6 +1,13 @@
-# schedule_app
+
+## 简介
 
 日程软件，设计源自 https:&#x2F;&#x2F;dribbble.com&#x2F;shots&#x2F;5816541-Schedule-industry
+
+## 效果
+
+![schedule_app](screenshots/schedule_app.jpg)
+
+
 
 ## Getting Started
 
@@ -40,13 +47,7 @@ Container(
   ),
 ```
 
-- MaterialRawButton + padding + margin + constraints，通过设置按钮的 `constraints` 对按钮进行约束
-
-```dart
-
-```
-
-- ConstrainedBox，把按钮放到一个有约束的 box 下，强制限制其尺寸。
+- ConstrainedBox，把按钮放到一个有约束的 box 下，强制限制其尺寸。**推荐使用此方式，可以参考界面中的 Categories 右边的icon以及Switch**
 
 ```dart
 ConstrainedBox(
@@ -63,3 +64,11 @@ ConstrainedBox(
     ),
   ),
 ```
+
+## 感谢
+
+- Dribble 设计 [Schedule Industry](https://dribbble.com/shots/5816541-Schedule-industry)
+- Google Fonts [Share Tech Mono](https://fonts.google.com/specimen/Share+Tech+Mono/)
+
+## 参考
+
